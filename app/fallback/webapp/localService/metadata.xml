@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="fallbackPatterns" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="fallbackPatterns" EntityType="fallbackPatterns.fallbackPatterns">
+                    <NavigationPropertyBinding Path="FallbackPatternType" Target="edmCoreTypes"/>
+                    <NavigationPropertyBinding Path="texts" Target="fallbackPatterns_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="fallbackPatterns_texts"/>
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="fallbackPatterns"/>
+                </EntitySet>
+                <EntitySet Name="edmCoreTypes" EntityType="fallbackPatterns.edmCoreTypes"/>
+                <EntitySet Name="fallbackPatterns_texts" EntityType="fallbackPatterns.fallbackPatterns_texts"/>
+            </EntityContainer>
+            <EntityType Name="fallbackPatterns">
+                <Key>
+                    <PropertyRef Name="FallbackPatternName"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="FallbackPatternName" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <NavigationProperty Name="FallbackPatternType" Type="fallbackPatterns.edmCoreTypes">
+                    <ReferentialConstraint Property="FallbackPatternType_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="FallbackPatternType_ID" Type="Edm.String" MaxLength="30"/>
+                <Property Name="FallbackPatternValue" Type="Edm.String" MaxLength="40"/>
+                <Property Name="FallbackPatternDescription" Type="Edm.String" MaxLength="40"/>
+                <NavigationProperty Name="texts" Type="Collection(fallbackPatterns.fallbackPatterns_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="fallbackPatterns.fallbackPatterns_texts">
+                    <ReferentialConstraint Property="FallbackPatternName" ReferencedProperty="FallbackPatternName"/>
+                </NavigationProperty>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="fallbackPatterns.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="fallbackPatterns.fallbackPatterns"/>
+            </EntityType>
+            <EntityType Name="edmCoreTypes">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" MaxLength="30" Nullable="false"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="60"/>
+            </EntityType>
+            <EntityType Name="DraftAdministrativeData">
+                <Key>
+                    <PropertyRef Name="DraftUUID"/>
+                </Key>
+                <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="CreatedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsCreatedByMe" Type="Edm.Boolean"/>
+                <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="InProcessByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsProcessedByMe" Type="Edm.Boolean"/>
+            </EntityType>
+            <EntityType Name="fallbackPatterns_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="FallbackPatternName"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="FallbackPatternName" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="FallbackPatternDescription" Type="Edm.String" MaxLength="40"/>
+            </EntityType>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="fallbackPatterns.fallbackPatterns"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="fallbackPatterns.fallbackPatterns"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="fallbackPatterns.fallbackPatterns"/>
+                <ReturnType Type="fallbackPatterns.fallbackPatterns"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="fallbackPatterns.fallbackPatterns"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="fallbackPatterns.fallbackPatterns"/>
+            </Action>
+            <Annotations Target="fallbackPatterns.EntityContainer/fallbackPatterns">
+                <Annotation Term="Common.DraftRoot">
+                    <Record Type="Common.DraftRootType">
+                        <PropertyValue Property="ActivationAction" String="fallbackPatterns.draftActivate"/>
+                        <PropertyValue Property="EditAction" String="fallbackPatterns.draftEdit"/>
+                        <PropertyValue Property="PreparationAction" String="fallbackPatterns.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="fallbackPatterns.fallbackPatterns/IsActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="fallbackPatterns.fallbackPatterns/HasActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="fallbackPatterns.fallbackPatterns/HasDraftEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="fallbackPatterns.fallbackPatterns/DraftAdministrativeData">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="fallbackPatterns.DraftAdministrativeData">
+                <Annotation Term="Common.Label" String="{i18n>Draft_DraftAdministrativeData}"/>
+                </Annotations>
+                <Annotations Target="fallbackPatterns.DraftAdministrativeData/DraftUUID">
+                    <Annotation Term="UI.Hidden" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n>Draft_DraftUUID}"/>
+                    </Annotations>
+                    <Annotations Target="fallbackPatterns.DraftAdministrativeData/CreationDateTime">
+                        <Annotation Term="Common.Label" String="{i18n>Draft_CreationDateTime}"/>
+                        </Annotations>
+                        <Annotations Target="fallbackPatterns.DraftAdministrativeData/CreatedByUser">
+                            <Annotation Term="Common.Label" String="{i18n>Draft_CreatedByUser}"/>
+                            </Annotations>
+                            <Annotations Target="fallbackPatterns.DraftAdministrativeData/DraftIsCreatedByMe">
+                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsCreatedByMe}"/>
+                                </Annotations>
+                                <Annotations Target="fallbackPatterns.DraftAdministrativeData/LastChangeDateTime">
+                                    <Annotation Term="Common.Label" String="{i18n>Draft_LastChangeDateTime}"/>
+                                    </Annotations>
+                                    <Annotations Target="fallbackPatterns.DraftAdministrativeData/LastChangedByUser">
+                                        <Annotation Term="Common.Label" String="{i18n>Draft_LastChangedByUser}"/>
+                                        </Annotations>
+                                        <Annotations Target="fallbackPatterns.DraftAdministrativeData/InProcessByUser">
+                                            <Annotation Term="Common.Label" String="{i18n>Draft_InProcessByUser}"/>
+                                            </Annotations>
+                                            <Annotations Target="fallbackPatterns.DraftAdministrativeData/DraftIsProcessedByMe">
+                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsProcessedByMe}"/>
+                                                </Annotations>
+                                            </Schema>
+                                        </edmx:DataServices>
+                                    </edmx:Edmx>

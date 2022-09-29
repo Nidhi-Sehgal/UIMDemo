@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="flactions" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="flactions" EntityType="flactions.flactions">
+                    <NavigationPropertyBinding Path="MaskingPatternName" Target="patterns"/>
+                    <NavigationPropertyBinding Path="FallbackPatternName" Target="fallbackPatterns"/>
+                    <NavigationPropertyBinding Path="texts" Target="flactions_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="flactions_texts"/>
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="flactions"/>
+                </EntitySet>
+                <EntitySet Name="patterns" EntityType="flactions.patterns">
+                    <NavigationPropertyBinding Path="texts" Target="patterns_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="patterns_texts"/>
+                </EntitySet>
+                <EntitySet Name="fallbackPatterns" EntityType="flactions.fallbackPatterns">
+                    <NavigationPropertyBinding Path="texts" Target="fallbackPatterns_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="fallbackPatterns_texts"/>
+                </EntitySet>
+                <EntitySet Name="flactions_texts" EntityType="flactions.flactions_texts"/>
+                <EntitySet Name="patterns_texts" EntityType="flactions.patterns_texts"/>
+                <EntitySet Name="fallbackPatterns_texts" EntityType="flactions.fallbackPatterns_texts"/>
+            </EntityContainer>
+            <EntityType Name="flactions">
+                <Key>
+                    <PropertyRef Name="FieldLevelActionIdentifier"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="FieldLevelActionIdentifier" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="FieldLevelActionIsMask" Type="Edm.Boolean"/>
+                <NavigationProperty Name="MaskingPatternName" Type="flactions.patterns">
+                    <ReferentialConstraint Property="MaskingPatternName_MaskingPatternName" ReferencedProperty="MaskingPatternName"/>
+                </NavigationProperty>
+                <Property Name="MaskingPatternName_MaskingPatternName" Type="Edm.String" MaxLength="10"/>
+                <Property Name="FieldLevelActionIsHide" Type="Edm.Boolean"/>
+                <Property Name="FieldLevelActionIsDisable" Type="Edm.Boolean"/>
+                <Property Name="FieldLevelActionIsClear" Type="Edm.Boolean"/>
+                <Property Name="FldLvlActionIsAnonymization" Type="Edm.Boolean"/>
+                <Property Name="AnonymizationPatternName" Type="Edm.String" MaxLength="10"/>
+                <Property Name="FldLvlActionIsPseudonymization" Type="Edm.Boolean"/>
+                <Property Name="PseudonymizationPatternName" Type="Edm.String" MaxLength="10"/>
+                <NavigationProperty Name="FallbackPatternName" Type="flactions.fallbackPatterns">
+                    <ReferentialConstraint Property="FallbackPatternName_FallbackPatternName" ReferencedProperty="FallbackPatternName"/>
+                </NavigationProperty>
+                <Property Name="FallbackPatternName_FallbackPatternName" Type="Edm.String" MaxLength="10"/>
+                <Property Name="FallbackPatternIsUsed" Type="Edm.Boolean"/>
+                <Property Name="UI5NavigationIsAllowed" Type="Edm.Boolean"/>
+                <Property Name="CRMNavigationIsAllowed" Type="Edm.Boolean"/>
+                <Property Name="CRMActionIsAllowed" Type="Edm.Boolean"/>
+                <Property Name="FieldLevelActionDescription" Type="Edm.String" MaxLength="1024"/>
+                <NavigationProperty Name="texts" Type="Collection(flactions.flactions_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="flactions.flactions_texts">
+                    <ReferentialConstraint Property="FieldLevelActionIdentifier" ReferencedProperty="FieldLevelActionIdentifier"/>
+                </NavigationProperty>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="flactions.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="flactions.flactions"/>
+            </EntityType>
+            <EntityType Name="patterns">
+                <Key>
+                    <PropertyRef Name="MaskingPatternName"/>
+                </Key>
+                <Property Name="MaskingPatternName" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="MaskingPatternStrategy_ID" Type="Edm.String" MaxLength="4"/>
+                <Property Name="Set1MaskingStartPositionVal" Type="Edm.Int32"/>
+                <Property Name="Set1MaskingCharacters" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Set2MaskingStartPositionVal" Type="Edm.Int32"/>
+                <Property Name="Set2MaskingCharacters" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Set3MaskingStartPositionVal" Type="Edm.Int32"/>
+                <Property Name="Set3MaskingCharacters" Type="Edm.String" MaxLength="40"/>
+                <Property Name="EmptyFieldIsMasked" Type="Edm.Boolean" DefaultValue="true"/>
+                <Property Name="MaskingPatternDescription" Type="Edm.String" MaxLength="128"/>
+                <Property Name="HideSet" Type="Edm.Boolean"/>
+                <Property Name="HideBadi" Type="Edm.Boolean"/>
+                <NavigationProperty Name="texts" Type="Collection(flactions.patterns_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="flactions.patterns_texts">
+                    <ReferentialConstraint Property="MaskingPatternName" ReferencedProperty="MaskingPatternName"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="fallbackPatterns">
+                <Key>
+                    <PropertyRef Name="FallbackPatternName"/>
+                </Key>
+                <Property Name="FallbackPatternName" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="FallbackPatternType_ID" Type="Edm.String" MaxLength="30"/>
+                <Property Name="FallbackPatternValue" Type="Edm.String" MaxLength="40"/>
+                <Property Name="FallbackPatternDescription" Type="Edm.String" MaxLength="40"/>
+                <NavigationProperty Name="texts" Type="Collection(flactions.fallbackPatterns_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="flactions.fallbackPatterns_texts">
+                    <ReferentialConstraint Property="FallbackPatternName" ReferencedProperty="FallbackPatternName"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="DraftAdministrativeData">
+                <Key>
+                    <PropertyRef Name="DraftUUID"/>
+                </Key>
+                <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="CreatedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsCreatedByMe" Type="Edm.Boolean"/>
+                <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="InProcessByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsProcessedByMe" Type="Edm.Boolean"/>
+            </EntityType>
+            <EntityType Name="flactions_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="FieldLevelActionIdentifier"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="FieldLevelActionIdentifier" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="FieldLevelActionDescription" Type="Edm.String" MaxLength="1024"/>
+            </EntityType>
+            <EntityType Name="patterns_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="MaskingPatternName"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="MaskingPatternName" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="MaskingPatternDescription" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="fallbackPatterns_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="FallbackPatternName"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="FallbackPatternName" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="FallbackPatternDescription" Type="Edm.String" MaxLength="40"/>
+            </EntityType>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="flactions.flactions"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="flactions.flactions"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="flactions.flactions"/>
+                <ReturnType Type="flactions.flactions"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="flactions.flactions"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="flactions.flactions"/>
+            </Action>
+            <Annotations Target="flactions.EntityContainer/flactions">
+                <Annotation Term="Common.DraftRoot">
+                    <Record Type="Common.DraftRootType">
+                        <PropertyValue Property="ActivationAction" String="flactions.draftActivate"/>
+                        <PropertyValue Property="EditAction" String="flactions.draftEdit"/>
+                        <PropertyValue Property="PreparationAction" String="flactions.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="flactions.flactions/IsActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="flactions.flactions/HasActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="flactions.flactions/HasDraftEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="flactions.flactions/DraftAdministrativeData">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="flactions.patterns/HideSet">
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="flactions.patterns/HideBadi">
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="flactions.DraftAdministrativeData">
+                <Annotation Term="Common.Label" String="{i18n>Draft_DraftAdministrativeData}"/>
+                </Annotations>
+                <Annotations Target="flactions.DraftAdministrativeData/DraftUUID">
+                    <Annotation Term="UI.Hidden" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n>Draft_DraftUUID}"/>
+                    </Annotations>
+                    <Annotations Target="flactions.DraftAdministrativeData/CreationDateTime">
+                        <Annotation Term="Common.Label" String="{i18n>Draft_CreationDateTime}"/>
+                        </Annotations>
+                        <Annotations Target="flactions.DraftAdministrativeData/CreatedByUser">
+                            <Annotation Term="Common.Label" String="{i18n>Draft_CreatedByUser}"/>
+                            </Annotations>
+                            <Annotations Target="flactions.DraftAdministrativeData/DraftIsCreatedByMe">
+                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsCreatedByMe}"/>
+                                </Annotations>
+                                <Annotations Target="flactions.DraftAdministrativeData/LastChangeDateTime">
+                                    <Annotation Term="Common.Label" String="{i18n>Draft_LastChangeDateTime}"/>
+                                    </Annotations>
+                                    <Annotations Target="flactions.DraftAdministrativeData/LastChangedByUser">
+                                        <Annotation Term="Common.Label" String="{i18n>Draft_LastChangedByUser}"/>
+                                        </Annotations>
+                                        <Annotations Target="flactions.DraftAdministrativeData/InProcessByUser">
+                                            <Annotation Term="Common.Label" String="{i18n>Draft_InProcessByUser}"/>
+                                            </Annotations>
+                                            <Annotations Target="flactions.DraftAdministrativeData/DraftIsProcessedByMe">
+                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsProcessedByMe}"/>
+                                                </Annotations>
+                                            </Schema>
+                                        </edmx:DataServices>
+                                    </edmx:Edmx>
