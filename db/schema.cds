@@ -43,7 +43,6 @@ extend patterns with {
 };
 
 entity fallbackPatterns {
-        // key ID                         : UUID;
     key FallbackPatternName        : String(10);
         FallbackPatternType        : Association to edmCoreTypes;
         FallbackPatternValue       : String(40);

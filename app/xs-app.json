@@ -14,5 +14,5 @@
             "csrfProtection": true
         }
     ],
-    "welcomeFile":"/app/launchpad.html"
+    "welcomeFile": "/app/launchpad.html"
 }

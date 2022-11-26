@@ -1,6 +1,6 @@
 ---
 _schema-version: '3.1'
-ID: UIMDemo
+ID: UIMMFDemo
 version: 1.0.0
 description: "A simple CAP project."
 parameters:
@@ -12,7 +12,7 @@ build-parameters:
         - npx -p @sap/cds-dk cds build --production
 
 modules:
-  - name: UIMDemo-srv
+  - name: UIMMFDemo-srv
     type: nodejs
     path: gen/srv
     parameters:
@@ -24,17 +24,20 @@ modules:
         properties:
           srv-url: ${default-url}
     requires:
-      - name: UIMDemo-db
+      - name: UIMMFDemo-db
+      - name: UIMMFDemo-auth
+      - name: UIMMFDemo-destination
+      - name: UIMMFDemo-connectivity
 
-  - name: UIMDemo-db-deployer
+  - name: UIMMFDemo-db-deployer
     type: hdb
     path: db #gen/db
     parameters:
       buildpack: nodejs_buildpack
     requires:
-      - name: UIMDemo-db
+      - name: UIMMFDemo-db
 
-  - name: UIMDemo
+  - name: UIMMFDemo
     type: approuter.nodejs
     path: app/ # from cds.env.folders. Consider also cds.env.build.target -> gen/app
     parameters:
@@ -48,11 +51,32 @@ modules:
           name: srv-api # must be used in xs-app.json as well
           url: ~{srv-url}
           forwardAuthToken: true
+      - name: UIMMFDemo-auth
 
 resources:
-  - name: UIMDemo-db
+  - name: UIMMFDemo-db
     type: com.sap.xs.hdi-container
     parameters:
       service: hana
       service-plan: hdi-shared
 
+  - name: UIMMFDemo-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: UIMMFDemo-${org}-${space}
+        tenant-mode: dedicated
+
+  - name: UIMMFDemo-destination
+    type: org.cloudfoundry.existing-service
+    parameters:
+     service-name: UIMMFDemo-destination
+      
+  - name: UIMMFDemo-connectivity
+    type: org.cloudfoundry.managed-service
+    parameters:
+     service: connectivity
+     service-plan: lite

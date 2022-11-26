@@ -1,0 +1,311 @@
+{
+  "meta": {
+    "creator": "cds-dk 6.1.5"
+  },
+  "$version": "2.0",
+  "definitions": {
+    "Config": {
+      "kind": "service",
+      "@cds.external": true,
+      "@m.IsDefaultEntityContainer": "true",
+      "@sap.message.scope.supported": "true",
+      "@sap.supported.formats": "atom json xlsx"
+    },
+    "Config.C_UIMFallbackPattern": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "@sap.searchable": "true",
+      "@sap.content.version": "1",
+      "@sap.label": "Consumption view for fallback pattern",
+      "elements": {
+        "FallbackPatternName": {
+          "key": true,
+          "type": "cds.String",
+          "length": 10,
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Dummy Pattern",
+          "@sap.quickinfo": "Dummy Pattern Name"
+        },
+        "FallbackPatternType": {
+          "type": "cds.String",
+          "length": 30,
+          "@sap.label": "Dummy Pattern Type"
+        },
+        "FallbackPatternValue": {
+          "type": "cds.String",
+          "length": 40,
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Dummy Value"
+        },
+        "to_UIMFallbackPatternTextTP": {
+          "@cds.ambiguous": "missing on condition?",
+          "type": "cds.Composition",
+          "target": "Config.C_UIMFallbackPatternText"
+        }
+      }
+    },
+    "Config.C_UIMFallbackPatternText": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "@sap.searchable": "true",
+      "@sap.content.version": "1",
+      "@sap.label": "Consumption view for fallback pattern text",
+      "elements": {
+        "FallbackPatternName": {
+          "key": true,
+          "type": "cds.String",
+          "length": 10,
+          "@sap.display.format": "UpperCase",
+          "@sap.text": "FallbackPatternDescription",
+          "@sap.label": "Dummy Pattern",
+          "@sap.quickinfo": "Dummy Pattern Name"
+        },
+        "LanguageCode": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2,
+          "@sap.label": "Language Key"
+        },
+        "FallbackPatternDescription": {
+          "type": "cds.String",
+          "length": 40,
+          "@sap.label": "Description"
+        }
+      }
+    },
+    "Config.C_UIMFieldLevelAction": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "@sap.searchable": "true",
+      "@sap.content.version": "1",
+      "@sap.label": "Consumption view for field level action",
+      "elements": {
+        "FieldLevelActionIdentifier": {
+          "key": true,
+          "type": "cds.String",
+          "length": 40,
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Field Level Action",
+          "@sap.quickinfo": "Action"
+        },
+        "FieldLevelActionIsMask": {
+          "type": "cds.Boolean",
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Mask"
+        },
+        "MaskingPatternName": {
+          "type": "cds.String",
+          "length": 10,
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Masking Pattern",
+          "@sap.quickinfo": "Masking Pattern Name"
+        },
+        "FieldLevelActionIsHide": {
+          "type": "cds.Boolean",
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Hide"
+        },
+        "FieldLevelActionIsDisable": {
+          "type": "cds.Boolean",
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Disable"
+        },
+        "FieldLevelActionIsClear": {
+          "type": "cds.Boolean",
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Clear Value",
+          "@sap.quickinfo": "Clear"
+        },
+        "FldLvlActionIsAnonymization": {
+          "type": "cds.Boolean",
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Anonymization"
+        },
+        "AnonymizationPatternName": {
+          "type": "cds.String",
+          "length": 10,
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Pattern",
+          "@sap.quickinfo": "Anonymization Pattern"
+        },
+        "FldLvlActionIsPseudonymization": {
+          "type": "cds.Boolean",
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Pseudonymizing"
+        },
+        "PseudonymizationPatternName": {
+          "type": "cds.String",
+          "length": 10,
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Pseudonymizing Patt",
+          "@sap.quickinfo": "Pseudonymizing Pattern"
+        },
+        "FallbackPatternIsUsed": {
+          "type": "cds.Boolean",
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Display Dummy Value",
+          "@sap.quickinfo": "Use Dummy Value"
+        },
+        "FallbackPatternName": {
+          "type": "cds.String",
+          "length": 10,
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Dummy Pattern",
+          "@sap.quickinfo": "Dummy Pattern Name"
+        },
+        "UI5NavigationIsAllowed": {
+          "type": "cds.Boolean",
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Navigation Allowed",
+          "@sap.quickinfo": "Allow Navigation for Masked Record"
+        },
+        "CRMNavigationIsAllowed": {
+          "type": "cds.Boolean",
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Navigation Allowed",
+          "@sap.quickinfo": "Allow Navigation for Masked Record"
+        },
+        "CRMActionIsAllowed": {
+          "type": "cds.Boolean",
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Allow Action",
+          "@sap.quickinfo": "Allow Action for Masked Record"
+        },
+        "to_UIMFieldLevelActionTextTP": {
+          "@cds.ambiguous": "missing on condition?",
+          "type": "cds.Composition",
+          "target": "Config.C_UIMFieldLevelActionText"
+        }
+      }
+    },
+    "Config.C_UIMFieldLevelActionText": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "@sap.searchable": "true",
+      "@sap.content.version": "1",
+      "@sap.label": "Consumption view for field level action text",
+      "elements": {
+        "FieldLevelActionIdentifier": {
+          "key": true,
+          "type": "cds.String",
+          "length": 40,
+          "@sap.display.format": "UpperCase",
+          "@sap.text": "FieldLevelActionDescription",
+          "@sap.label": "Field Level Action",
+          "@sap.quickinfo": "Action"
+        },
+        "LanguageCode": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2,
+          "@sap.label": "Language Key"
+        },
+        "FieldLevelActionDescription": {
+          "type": "cds.String",
+          "length": 128,
+          "@sap.label": "Description"
+        }
+      }
+    },
+    "Config.C_UIMMaskingPattern": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "@sap.searchable": "true",
+      "@sap.content.version": "1",
+      "@sap.label": "Consumption view for masking pattern",
+      "elements": {
+        "MaskingPatternName": {
+          "key": true,
+          "type": "cds.String",
+          "length": 10,
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Masking Pattern",
+          "@sap.quickinfo": "Masking Pattern Name"
+        },
+        "MaskingPatternStrategy": {
+          "type": "cds.String",
+          "length": 4,
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Masking Strategy",
+          "@sap.quickinfo": "Masking Pattern Strategy"
+        },
+        "Set1MaskingStartPositionVal": {
+          "type": "cds.Integer",
+          "@odata.Type": "Edm.Byte",
+          "@sap.label": "Start Position",
+          "@sap.quickinfo": "Starting Position of Masking"
+        },
+        "Set1MaskingCharacters": {
+          "type": "cds.String",
+          "length": 40,
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Masking Character"
+        },
+        "Set2MaskingStartPositionVal": {
+          "type": "cds.Integer",
+          "@odata.Type": "Edm.Byte",
+          "@sap.label": "Start Position",
+          "@sap.quickinfo": "Starting Position of Masking"
+        },
+        "Set2MaskingCharacters": {
+          "type": "cds.String",
+          "length": 40,
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Masking Character"
+        },
+        "Set3MaskingStartPositionVal": {
+          "type": "cds.Integer",
+          "@odata.Type": "Edm.Byte",
+          "@sap.label": "Start Position",
+          "@sap.quickinfo": "Starting Position of Masking"
+        },
+        "Set3MaskingCharacters": {
+          "type": "cds.String",
+          "length": 40,
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Masking Character"
+        },
+        "EmptyFieldIsMasked": {
+          "type": "cds.Boolean",
+          "@sap.display.format": "UpperCase",
+          "@sap.label": "Apply masking for Em",
+          "@sap.quickinfo": "Apply masking for Empty Fields"
+        },
+        "to_UIMMaskingPatternTextTP": {
+          "@cds.ambiguous": "missing on condition?",
+          "type": "cds.Composition",
+          "target": "Config.C_UIMMaskingPatternText"
+        }
+      }
+    },
+    "Config.C_UIMMaskingPatternText": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "@sap.searchable": "true",
+      "@sap.content.version": "1",
+      "@sap.label": "Consumption view for masking pattern text",
+      "elements": {
+        "MaskingPatternName": {
+          "key": true,
+          "type": "cds.String",
+          "length": 10,
+          "@sap.display.format": "UpperCase",
+          "@sap.text": "MaskingPatternDescription",
+          "@sap.label": "Masking Pattern",
+          "@sap.quickinfo": "Masking Pattern Name"
+        },
+        "LanguageCode": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2,
+          "@sap.label": "Language Key"
+        },
+        "MaskingPatternDescription": {
+          "type": "cds.String",
+          "length": 128,
+          "@sap.label": "Description"
+        }
+      }
+    }
+  }
+}

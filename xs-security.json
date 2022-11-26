@@ -1,5 +1,7 @@
 {
-  "scopes": [],
-  "attributes": [],
-  "role-templates": []
+    "xsappname": "UIMMFDemo",
+    "tenant-mode": "dedicated",
+    "scopes": [],
+    "attributes": [],
+    "role-templates": []
 }
